@@ -1,0 +1,30 @@
+SYSTEM  OS2V2_DLL INITINSTANCE TERMINSTANCE
+OPTION  MANYAUTODATA
+
+OPTION START=UconvWrapInitTerm
+
+IMPORT  U32CreateUconvObject UCV32.1
+IMPORT  U32UconvToUcs        UCV32.2 
+IMPORT  U32UconvFromUcs      UCV32.3
+IMPORT  U32FreeUconvObject   UCV32.4
+IMPORT  U32QueryUconvObject  UCV32.7
+IMPORT  U32SetUconvObject    UCV32.8
+IMPORT  U32QueryUconvCp      UCV32.9
+IMPORT  U32MapCpToUcsCp      UCV32.10
+IMPORT  U32StrFromUcs        UCV32.11
+IMPORT  U32StrToUcs          UCV32.12
+IMPORT  _U32Malloc           UCV32.13
+IMPORT  _U32Free             UCV32.14
+
+EXPORT  UniCreateUconvObject .1
+EXPORT  UniUconvToUcs        .2  = U32UconvToUcs
+EXPORT  UniUconvFromUcs      .3  = U32UconvFromUcs 
+EXPORT  UniFreeUconvObject   .4
+EXPORT  UniQueryUconvObject  .7  = U32QueryUconvObject
+EXPORT  UniSetUconvObject    .8  = U32SetUconvObject
+EXPORT  UniQueryUconvCp      .9  = U32QueryUconvCp
+EXPORT  UniMapCpToUcsCp      .10 = U32MapCpToUcsCp
+EXPORT  UniStrFromUcs        .11 = U32StrFromUcs
+EXPORT  UniStrToUcs          .12 = U32StrToUcs
+EXPORT  _UniMalloc           .13
+EXPORT  _UniFree             .14

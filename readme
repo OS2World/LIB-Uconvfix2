@@ -1,0 +1,41 @@
+                     Uconvfix2 v1.130924.
+
+This wrapper library is inspired by uconvfix from OS/2 ACPI team.
+Their uconvfix is very optimistic and releases the protecting spinlock only
+after correct return from the IBM uconv code. Unfortunately starting from second
+passing of unsupported code page this code hangs or GPFs. In this case uconvfix
+keeps spinlock in owned state forever and other uconv clients like JFS
+effectively hang as well. This implementation uses system shared mutex facility
+and at least should not produce additional hangs.
+
+Installation:
+* This package includes ucv32.dll - it's renamed uconv.dll,
+your original uconv.dll should be equal to renamed.
+* backup original uconv.dll
+* copy uconv.dll usv32.dll to the directory of original uconv.dll
+
+
+        Testcases to show the problem of uconv and uconfix.
+
+Hang:
+- Run File Commander and enter to text file editor;
+- Alt+C, codepage 999. This causes "Invalid code page" error window;
+- Another Alt+C, codepage 999. Hang inside IBM uconv.dll.
+
+GPF:
+- Run File Commander and enter to text file editor;
+- Alt+C, codepage 1251. This passes;
+- Another Alt+C, codepage 999. GPF inside IBM uconv.dll.
+
+
+Change log:
+1.130924:
+- Added serialization of _UniMalloc and _UniFree to the same mutex because they
+  are called simultaneously from Uconv allocation functions and from the
+  external IBM locale library
+
+1.130221:
+- Initial public version
+
+
+Author: "Vyacheslav Gnatenko" <moveton@gmail.com>
